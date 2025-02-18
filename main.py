@@ -10,6 +10,7 @@ from etapas.corretor import planej_campanhas
 from etapas.resumidor import resumidor
 from etapas.alinhador_jornal import alinhar_jornal
 from etapas.alinhador_rede import alinhar
+from etapas.resum_entrevista import resumidor_entrevista
 
 
 st.set_page_config(
@@ -117,7 +118,8 @@ if login():
                 "Corretor de texto",
                 "Resumidor de texto",
                 "Alinhador Redes Sociais e Materiais Impressos",
-                "Alinhador Jornal Conecta"
+                "Alinhador Jornal Conecta",
+                "Resumidor de entrevista"
 
             ]
         )
@@ -131,6 +133,8 @@ if login():
                 alinhar()
             elif midias_option == "Alinhador Jornal Conecta":
                 alinhar_jornal()
+            elif midias_option == "Resumidor de entrevista":
+                resumidor_entrevista()
 
 
  
