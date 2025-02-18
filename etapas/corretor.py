@@ -46,7 +46,7 @@ def limpar_estado():
 def planej_campanhas():
     st.subheader('Corretor de texto')
 
-    texto = st.text_input('Texto a ser analisado:', help="Digite/Cole aqui o texto a ser analisado", height = 300)
+    texto = st.text_area('Texto a ser analisado:', help="Digite/Cole aqui o texto a ser analisado", height = 300)
    
 
     if "relatorio_gerado" in st.session_state and st.session_state.relatorio_gerado:
