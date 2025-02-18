@@ -8,6 +8,8 @@ from langchain_openai import ChatOpenAI
 from tavily import TavilyClient
 from etapas.corretor import planej_campanhas
 from etapas.resumidor import resumidor
+from etapas.alinhador_jornal import alinhar_jornal
+from etapas.alinhador_rede import alinhar
 
 
 st.set_page_config(
@@ -132,7 +134,9 @@ if login():
             [
 
                 "Corretor de texto",
-                "Resumidor de texto"
+                "Resumidor de texto",
+                "Alinhador Redes Sociais e Materiais Impressos",
+                "Alinhador Jornal Conecta"
 
             ]
         )
@@ -142,6 +146,10 @@ if login():
                 planej_campanhas()
             elif midias_option == "Resumidor de texto":
                 resumidor()
+            elif midias_option == "Alinhador Redes Sociais e Materiais Impressos":
+                alinhar()
+            elif midias_option == "Alinhador Jornal Conecta":
+                alinhar_jornal()
 
 
  
