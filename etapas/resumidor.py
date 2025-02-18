@@ -59,9 +59,9 @@ def resumidor():
             limpar_estado()
             st.experimental_rerun()
     else:
-        if st.button('Iniciar Planejamento'):
+        if st.button('Resumir'):
             if 1 ==1:
-                with st.spinner('Corrigindo...'):
+                with st.spinner('Resumindo...'):
                     prompt_texto = f"""
                     Dado o texto: {texto};
                   
@@ -76,7 +76,7 @@ def resumidor():
 
 
                         # Exibe os resultados na interface
-                    st.header('Texto corrigido')
+                    st.header('Texto resumido')
                     st.markdown(corrected_output)
                   
 
