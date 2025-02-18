@@ -109,7 +109,7 @@ if login():
 
 
     # Seção para "Midias/Redes"
-    if selecao_sidebar == "Mídias":
+    if selecao_sidebar == "Holambra":
         st.sidebar.subheader("Mídias")
         midias_option = st.sidebar.selectbox(
             "Escolha o tipo de conteúdo Mídias:",
