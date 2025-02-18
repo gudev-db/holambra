@@ -12,7 +12,7 @@ from etapas.resumidor import resumidor
 
 st.set_page_config(
     layout="wide",
-    page_title="Macfor AutoDoc",
+    page_title="Macfor BetterDoc",
     page_icon="static/page-icon.png"
 )
 
