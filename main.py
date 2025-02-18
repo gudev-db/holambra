@@ -2,6 +2,7 @@ __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import os
+import google.generativeai as genai
 import streamlit as st
 from langchain_openai import ChatOpenAI
 from tavily import TavilyClient
