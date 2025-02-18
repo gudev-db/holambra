@@ -91,15 +91,15 @@ def exibir_subsecoes(selecao_sidebar):
         st.subheader("4. Investigação de Leads")
         st.text("Aprofunde-se no perfil do seu lead e obtenha informações detalhadas sobre suas necessidades e comportamentos.")
 
-    elif selecao_sidebar == "Mídias":
-        st.header("Mídias")
-        st.text("Elabore e otimize estratégias para a gestão de mídias sociais e criação de conteúdo visual impactante.")
-        st.subheader("1. Planejamento de Mídias e Redes")
-        st.text("Crie um planejamento detalhado para sua gestão de mídias e redes sociais. Com esse plano, você poderá traçar estratégias criativas para atrair, engajar e fidelizar seu público.")
-        st.subheader("2. Brainstorming de Anúncios")
-        st.text("Alavanque suas campanhas publicitárias com um brainstorming detalhado para anúncios. Gere várias sugestões criativas para engajar e converter seu público.")
-        st.subheader("3. Geração de Imagens")
-        st.text("Dê vida ao seu conteúdo visual com ideias de imagens geradas com base em uma descrição detalhada do que deseja comunicar.")
+    elif selecao_sidebar == "Holambra":
+        st.header("Holambra")
+        st.text("Utilidades de correção/redação customizadas para as necessidades da Cooperativa Holambra.")
+        st.subheader("1. Corretor")
+        st.text("Corrija o seu texto de acordo com as normas gramática/ortográficas padrão brasileiras mantendo o sentido principal.")
+        st.subheader("2. Resumidor")
+        st.text("Resuma o seu texto mantendo o sentido principal.")
+        st.subheader("3. Alinhador")
+        st.text("Alinhe o seu texto de acordo com o tom de voz da Cooperativa Holambra.")
 
     elif selecao_sidebar == "Documentos Salvos":
         st.header("Documentos Salvos")
@@ -113,7 +113,7 @@ if login():
         "Escolha a seção:",
         [
 
-            "Mídias",
+            "Holambra",
 
         ],
         index=0  # Predefinir como 'Pesquisa e Estratégia' ativo
