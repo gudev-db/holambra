@@ -7,15 +7,8 @@ from langchain_openai import ChatOpenAI
 from etapas.gemini_mkt import planej_mkt_page
 from tools.retrieve import visualizar_planejamentos  # Importando a função visualizar_planejamentos
 from tavily import TavilyClient
-from etapas.gemini_midias import planej_midias_page
-from etapas.gemini_crm import planej_crm_page
-from etapas.gemini_campanhas import planej_campanhas
-import google.generativeai as genai
-from contato.temaEmail import gen_temas_emails
-from etapas.image_gen import gen_img
-from etapas.lead_osint import osint_report
-from contato.Email import gen_emails
-from contato.noticias import pesquisa
+from etapas.corretor import planej_campanhas
+
 
 st.set_page_config(
     layout="wide",
