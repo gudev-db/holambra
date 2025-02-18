@@ -123,7 +123,7 @@ if login():
 
 
     # Seção para "Midias/Redes"
-    elif selecao_sidebar == "Mídias":
+    if selecao_sidebar == "Mídias":
         st.sidebar.subheader("Mídias")
         midias_option = st.sidebar.selectbox(
             "Escolha o tipo de conteúdo Mídias:",
