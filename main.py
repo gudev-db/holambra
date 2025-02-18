@@ -4,8 +4,6 @@ sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import os
 import streamlit as st
 from langchain_openai import ChatOpenAI
-from etapas.gemini_mkt import planej_mkt_page
-from tools.retrieve import visualizar_planejamentos  # Importando a função visualizar_planejamentos
 from tavily import TavilyClient
 from etapas.corretor import planej_campanhas
 
@@ -110,10 +108,9 @@ if login():
     selecao_sidebar = st.sidebar.radio(
         "Escolha a seção:",
         [
-            "Planejamento",
-            "CRM",
+
             "Mídias",
-            "Documentos Salvos"
+
         ],
         index=0  # Predefinir como 'Pesquisa e Estratégia' ativo
     )
@@ -121,47 +118,9 @@ if login():
     # Exibir as subseções com explicações dependendo da seleção no sidebar
     exibir_subsecoes(selecao_sidebar)
 
-    # Seção para "Pesquisa e Estratégia"
-    if selecao_sidebar == "Planejamento":
-        st.sidebar.subheader("Pesquisa e Estratégia")
-        pesquisa_estrategia = st.sidebar.selectbox(
-            "Escolha o tipo de plano:",
-            [
-                "Selecione uma opção",
-                "Planejamento de Pesquisa e Estratégia",
-                "Pesquisa de Tendências"
-            ]
-        )
 
-        if pesquisa_estrategia != "Selecione uma opção":
-            if pesquisa_estrategia == "Planejamento de Pesquisa e Estratégia":
-                planej_mkt_page()
-            elif pesquisa_estrategia == "Pesquisa de Tendências":
-                pesquisa()
 
-    # Seção para "Cliente"
-    elif selecao_sidebar == "CRM":
-        st.sidebar.subheader("CRM")
-        cliente_option = st.sidebar.selectbox(
-            "Escolha o tipo de conteúdo Cliente:",
-            [
-                "Selecione uma opção",
-                "Automação de Marketing",
-                "Cronograma de Temas de Emails",
-                "Redação de Emails",
-                "Investigação de Leads"
-            ]
-        )
 
-        if cliente_option != "Selecione uma opção":
-            if cliente_option == "Automação de Marketing":
-                planej_crm_page()
-            elif cliente_option == "Cronograma de Temas de Emails":
-                gen_temas_emails()
-            elif cliente_option == "Redação de Emails":
-                gen_emails()
-            elif cliente_option == "Investigação de Leads":
-                osint_report()
 
     # Seção para "Midias/Redes"
     elif selecao_sidebar == "Mídias":
@@ -169,41 +128,15 @@ if login():
         midias_option = st.sidebar.selectbox(
             "Escolha o tipo de conteúdo Mídias:",
             [
-                "Selecione uma opção",
-                "Planejamento de Mídias e Redes",
+
                 "Brainstorming de Anúncios",
-                "Geração de Imagens"
+
             ]
         )
 
         if midias_option != "Selecione uma opção":
-            if midias_option == "Planejamento de Mídias e Redes":
-                planej_midias_page()
-            elif midias_option == "Brainstorming de Anúncios":
+            if midias_option == "Brainstorming de Anúncios":
                 planej_campanhas()
-            elif midias_option == "Geração de Imagens":
-                gen_img()
 
-    # Seção para "Documentos Salvos"
-    elif selecao_sidebar == "Documentos Salvos":
-        st.sidebar.subheader("Visualizar Documentos Salvos")
 
-        # Obter a lista de documentos salvos
-        documentos_salvos = visualizar_planejamentos()  # Deve retornar [{"id": 1, "conteudo": "Texto 1"}, ...]
-
-        if documentos_salvos:
-            # Criar um selectbox para selecionar o documento pelo ID
-            doc_ids_salvos = [doc["id"] for doc in documentos_salvos]
-            doc_selecionado_id_salvo = st.sidebar.selectbox(
-                "Selecione o documento salvo pelo ID:",
-                ["Selecione um ID"] + doc_ids_salvos,
-                index=0
-            )
-
-            # Exibir o conteúdo do documento selecionado
-            if doc_selecionado_id_salvo != "Selecione um ID":
-                documento_selecionado_salvo = next(doc for doc in documentos_salvos if doc["id"] == doc_selecionado_id_salvo)
-                st.markdown("## Documento Salvo Selecionado")
-                st.text_area("Conteúdo do Documento", documento_selecionado_salvo["conteudo"], height=300)
-        else:
-            st.info("Nenhum documento salvo disponível no momento.")
+ 
