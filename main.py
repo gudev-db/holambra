@@ -7,6 +7,7 @@ import streamlit as st
 from langchain_openai import ChatOpenAI
 from tavily import TavilyClient
 from etapas.corretor import planej_campanhas
+from etapas.resumidor import resumidor
 
 
 st.set_page_config(
@@ -130,14 +131,17 @@ if login():
             "Escolha o tipo de conteúdo Mídias:",
             [
 
-                "Brainstorming de Anúncios",
+                "Corretor de texto",
+                "Resumidor de texto"
 
             ]
         )
 
         if midias_option != "Selecione uma opção":
-            if midias_option == "Brainstorming de Anúncios":
+            if midias_option == "Corretor de texto":
                 planej_campanhas()
+            elif midias_option == "Resumidor de texto":
+                resumidor()
 
 
  
