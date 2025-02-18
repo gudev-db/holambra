@@ -59,7 +59,7 @@ def planej_campanhas():
             limpar_estado()
             st.experimental_rerun()
     else:
-        if st.button('Iniciar Planejamento'):
+        if st.button('Corrigir'):
             if 1 ==1:
                 with st.spinner('Corrigindo...'):
                     prompt_texto = f"""
