@@ -88,7 +88,13 @@ def alinhar():
                         
                         
                         
-                    - Corrija-o se atentando aos padrões ortográficos e gramaticais da língua portuguesa brasileira de uma forma que mantenha o sentido do texto.
+                    - Corrija-o se atentando aos
+
+                    
+                    - Do's: {dos};
+                    - Don'ts {donts};
+
+                    
                         """
                     corrected_output = modelo_linguagem.generate_content(prompt_texto).text
 
