@@ -71,27 +71,8 @@ def login():
 
 # Função para exibir subseções com explicações
 def exibir_subsecoes(selecao_sidebar):
-    if selecao_sidebar == "Planejamento":
-        st.header("Planejamento")
-        st.text("Desenvolva estratégias sólidas com base em pesquisa detalhada e em tendências do mercado.")
-        st.subheader("1. Planejamento de Pesquisa e Estratégia")
-        st.text("Desenvolva um planejamento tático e de pesquisa robusto que guiará todas as ações estratégicas de marketing da sua empresa.")
-        st.subheader("2. Pesquisa de Tendências")
-        st.text("Acompanhe as últimas tendências do mercado, ajudando a guiar suas decisões de marketing e garantindo que sua empresa esteja à frente.")
 
-    elif selecao_sidebar == "CRM":
-        st.header("CRM")
-        st.text("Desenvolva estratégias focadas no relacionamento com seus clientes e na comunicação personalizada.")
-        st.subheader("1. Automação de Marketing")
-        st.text("Construa um fluxo de comunicação eficaz com seus leads e clientes. Estruture estratégias de relacionamento, automação de processos e gestão de dados.")
-        st.subheader("2. Cronograma de Temas de Emails")
-        st.text("Planeje campanhas de email marketing com um cronograma estratégico, criando uma jornada de comunicação eficiente com seus leads.")
-        st.subheader("3. Redação de Emails")
-        st.text("Gere exemplos de emails com base nas melhores práticas de comunicação para aumentar a eficácia da comunicação com seus leads.")
-        st.subheader("4. Investigação de Leads")
-        st.text("Aprofunde-se no perfil do seu lead e obtenha informações detalhadas sobre suas necessidades e comportamentos.")
-
-    elif selecao_sidebar == "Holambra":
+    if selecao_sidebar == "Holambra":
         st.header("Holambra")
         st.text("Utilidades de correção/redação customizadas para as necessidades da Cooperativa Holambra.")
         st.subheader("1. Corretor")
