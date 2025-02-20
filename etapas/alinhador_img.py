@@ -51,13 +51,13 @@ def alinhar_img():
         # Define o tipo MIME correto
         mime_type = "image/png" if image.format == "PNG" else "image/jpeg"
 
-        # Gera a descrição da imagem usando o Gemini
+       # Gera a descrição da imagem usando o Gemini
         with st.spinner('Analisando a imagem...'):
-            try:
-                resposta = modelo_vision.generate_content([
-                    {"mime_type": mime_type, "data": img_bytes}
-                ])
-                descricao = resposta['text']  # Garantindo que a resposta seja extraída corretamente
+            resposta = modelo_vision.generate_content([
+                {"mime_type": mime_type, "data": img_bytes},
+                {"text": ""}  # Adiciona um parâmetro de texto vazio
+            ])
+            descricao = resposta.text  # Extraindo a resposta corretamente
             except Exception as e:
                 st.error(f"Ocorreu um erro ao processar a imagem: {e}")
                 return
