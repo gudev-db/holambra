@@ -14,22 +14,16 @@ modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
 
 # Guias do cliente
 guias = """
-Sempre fazer:
-- Manter um tom autêntico, educativo, empático e inspirador.
-- Reforçar os pilares confiança, qualidade e segurança.
-- Seguir as regras ortográficas e gramaticais da Língua Portuguesa.
-- Escrever “Loja de Suprimentos” com iniciais maiúsculas.
-- A palavra “Cooperativa” sempre com inicial maiúscula.
-- Em nomes de regiões, utilizar inicial maiúscula (ex: Sul, Norte).
-- Usar primeira pessoa do plural: “Nós somos”, “nós temos”, etc.
-- Preferir “CEO” em vez de Presidente Executivo; utilizar “e” minúsculo em “e-Coop”.
-- Em materiais impressos, justificar o texto à esquerda.
 
-Sempre evitar:
-- Utilizar a palavra “prosperidade” e a hashtag #culturadequalidade.
-- Utilizar fotos que mostrem as unidades em páginas seguidas.
-- Usar um tom de voz que não seja genuíno ou que não ressoe com os valores da marca.
-- Apenas “copiar e colar” informações para os materiais impressos.
+- Cliente quer uma imagem limpa. Sem sujeira
+- Cliente não quer pessoas de bermuda
+- Cliente não quer 'personificar' a marca. Então fotos com uma única pessoa não podem.
+- Imagens devem ser acertivas
+- Sem 0 antes dos números
+- deixar a fonte mais de rodapé e trabalhar mais o título para chamar mais atenção
+- ícone ao lado das culturas para chamar atenção
+- em sinal de atenção, colocaria um ícone para ilustrar
+
 """
 
 # Função para analisar a imagem
