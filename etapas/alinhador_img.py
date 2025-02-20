@@ -14,10 +14,13 @@ modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
 
 # Guias do cliente
 guias = """
+Se for apenas uma imagem, eis os requisitos:
 - Cliente quer uma imagem limpa. Sem sujeira.
 - Cliente não quer pessoas de bermuda.
 - Cliente não quer 'personificar' a marca. Então fotos com uma única pessoa não podem.
 - Imagens devem ser assertivas.
+
+Se for uma imagem com textos ou elementos gráficos na tela, adicione esses requisitos para aprovação além dos anteriores:
 - Sem 0 antes dos números.
 - Deixar a fonte mais de rodapé e trabalhar mais o título para chamar mais atenção.
 - Ícone ao lado das culturas para chamar atenção.
