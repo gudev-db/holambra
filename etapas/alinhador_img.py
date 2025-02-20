@@ -63,16 +63,18 @@ def alinhar_img():
         #prompt = "Descreva em máximo e profundo e extremo detalhe tudo que está contido nessa imagem (o seu retorno será toda a referência que o próximo prompt terá como referência sobre o que está na imagem, então, não deixe nada passar). Desde uma descrição extremamente detalhada da imagem, até os textos, elementos gráficos e cores mais prominentes contidas nela se os existirem. Diga se o sol (se presente) brilha demais ao ponto de ofuscar demais a imagem."
         prompt = '''
 
+        Você está aqui para aprovar imagens de criativos para campanhas de marketing digital para a cooperativa holambra. 
         Se atente ao mínimo e extremo detalhe de tudo que está na imagem, você é uma pessoa extrema e profundamente detalhista.
         
-        Levando em conta os requisitos de aprovação:
+        Esses são os requisitos de aprovação de imagens:
         
         Se for apenas uma imagem, eis os requisitos:
         - Cliente quer uma imagem limpa. Sem sujeira.
         - Cliente não quer pessoas de bermuda e/ou roupas casuais em geral.
         - Cliente não quer 'personificar' a marca. Então fotos com uma única pessoa não podem ser aprovadas.
         - Imagens devem ser assertivas.
-        - Se contiver um sol, ele não pode ser brilhante demais. Dentro da própria região em que o sol está contido, ele não deve brilhar demais.
+        - Se contiver um sol, ele não pode ser brilhante demais. Dentro da própria região em que o sol está contido, ele não deve brilhar demais. De uma forma geral, o cliente quer
+        que todos os elementos de uma imagem sejam visíveis e nenhum se sobreponha demais ao outro.
         
         Se for uma imagem com textos ou elementos gráficos na tela, adicione esses requisitos para aprovação além dos anteriores:
         - '0' à esquerda de números é critério de reprovação. Exemplo: '3' está ok, mas '03' não.
@@ -80,7 +82,7 @@ def alinhar_img():
         - Se culturas de plantio forem mencionadas, precisam de um ícone as acompanhando. Caso contrário, reprovada.
         - Em elementos que devem ser um sinal de atenção, precisa um ícone para ilustrar.
 
-        Aprove ou não a imagem, com detalhes do porquê.
+        Com base nos requisitos de aprovação, diga se a imagem está aprovada ou não.
         '''
         # Gera a descrição da imagem usando o Gemini
         try:
