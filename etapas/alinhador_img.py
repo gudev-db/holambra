@@ -36,6 +36,10 @@ Sempre evitar:
 def alinhar_img():
     st.subheader('Análise de Imagem')
 
+    # Criação de um estado para controlar a imagem carregada
+    if 'image' not in st.session_state:
+        st.session_state.image = None
+
     # Upload da imagem
     uploaded_file = st.file_uploader("Escolha uma imagem", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:
@@ -51,8 +55,11 @@ def alinhar_img():
         # Define o tipo MIME correto
         mime_type = "image/png" if image.format == "PNG" else "image/jpeg"
 
+        # Armazena a imagem no estado da sessão
+        st.session_state.image = image
+
+        # Gera a descrição da imagem usando o Gemini
         try:
-            # Gera a descrição da imagem usando o Gemini
             with st.spinner('Analisando a imagem...'):
                 resposta = modelo_vision.generate_content([
                     {"mime_type": mime_type, "data": img_bytes},
@@ -87,3 +94,12 @@ def alinhar_img():
         # Exibe a avaliação
         st.subheader('Avaliação da Imagem')
         st.write(avaliacao)
+
+    # Botão para remover a imagem
+    if st.button("Remover Imagem"):
+        st.session_state.image = None
+        st.experimental_rerun()  # Atualiza a aplicação
+
+    # Se uma imagem foi armazenada no estado da sessão, exibe a opção de remover
+    if st.session_state.image is not None:
+        st.info("Imagem carregada. Clique no botão acima para removê-la.")
