@@ -74,6 +74,12 @@ def login():
 # Função para exibir subseções com explicações
 def exibir_subsecoes(selecao_sidebar):
 
+    if selecao_sidebar == "Holambra":
+        st.header("Holambra")
+        st.text("Utilidades de correção/redação/aprovação customizadas para as necessidades da Cooperativa Holambra.")
+        
+
+    
 
 # Verifique se o login foi feito antes de exibir o conteúdo
 if login():
