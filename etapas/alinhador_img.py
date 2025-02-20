@@ -51,16 +51,17 @@ def alinhar_img():
         # Define o tipo MIME correto
         mime_type = "image/png" if image.format == "PNG" else "image/jpeg"
 
-       # Gera a descrição da imagem usando o Gemini
-        with st.spinner('Analisando a imagem...'):
-            resposta = modelo_vision.generate_content([
-                {"mime_type": mime_type, "data": img_bytes},
-                {"text": ""}  # Adiciona um parâmetro de texto vazio
-            ])
-            descricao = resposta.text  # Extraindo a resposta corretamente
-            except Exception as e:
-                st.error(f"Ocorreu um erro ao processar a imagem: {e}")
-                return
+        try:
+            # Gera a descrição da imagem usando o Gemini
+            with st.spinner('Analisando a imagem...'):
+                resposta = modelo_vision.generate_content([
+                    {"mime_type": mime_type, "data": img_bytes},
+                    {"text": ""}  # Adiciona um parâmetro de texto vazio
+                ])
+                descricao = resposta.text  # Extraindo a resposta corretamente
+        except Exception as e:
+            st.error(f"Ocorreu um erro ao processar a imagem: {e}")
+            return
 
         # Exibe a descrição gerada
         st.subheader('Descrição da Imagem')
@@ -74,14 +75,14 @@ def alinhar_img():
         A imagem está aprovada? Justifique sua resposta.
         """
 
-        # Gera a resposta de verificação usando o modelo de linguagem
-        with st.spinner('Verificando alinhamento com os guias do cliente...'):
-            try:
+        try:
+            # Gera a resposta de verificação usando o modelo de linguagem
+            with st.spinner('Verificando alinhamento com os guias do cliente...'):
                 resposta_verificacao = modelo_texto.generate_content(prompt_verificacao)
                 avaliacao = resposta_verificacao['text']  # Garantindo que a resposta seja extraída corretamente
-            except Exception as e:
-                st.error(f"Ocorreu um erro ao verificar a imagem: {e}")
-                return
+        except Exception as e:
+            st.error(f"Ocorreu um erro ao verificar a imagem: {e}")
+            return
 
         # Exibe a avaliação
         st.subheader('Avaliação da Imagem')
