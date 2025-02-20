@@ -55,7 +55,7 @@ def alinhar_img():
         st.session_state.image = image
 
         # Prompt para analisar a imagem
-        prompt = "O que há nessa imagem?"
+        prompt = "Descreva em máximo detalhe tudo que está contido nessa imagem. Desde uma descrição extremamente detalhada da imagem, até os textos, elementos gráficos e cores mais prominentes contidas nela se os existirem."
 
         # Gera a descrição da imagem usando o Gemini
         try:
