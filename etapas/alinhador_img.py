@@ -79,7 +79,7 @@ def alinhar_img():
             # Gera a resposta de verificação usando o modelo de linguagem
             with st.spinner('Verificando alinhamento com os guias do cliente...'):
                 resposta_verificacao = modelo_texto.generate_content(prompt_verificacao)
-                avaliacao = resposta_verificacao['text']  # Garantindo que a resposta seja extraída corretamente
+                avaliacao = resposta_verificacao.text  # Corrigido o acesso à resposta
         except Exception as e:
             st.error(f"Ocorreu um erro ao verificar a imagem: {e}")
             return
