@@ -87,25 +87,25 @@ def alinhar_img():
             return
 
         # Exibe a descrição gerada
-        st.subheader('Descrição da Imagem')
+        st.subheader('Aprovação da Imagem')
         st.write(descricao)
 
-        # Prompt para verificar alinhamento com os guias do cliente
-        prompt_verificacao = f"""
-        Esta é a descrição da imagem fornecida: {descricao}.
-        De acordo com os seguintes guias do cliente:
-        {guias}
-        A imagem está aprovada? Justifique sua resposta.
-        """
+        # # Prompt para verificar alinhamento com os guias do cliente
+        # prompt_verificacao = f"""
+        # Esta é a descrição da imagem fornecida: {descricao}.
+        # De acordo com os seguintes guias do cliente:
+        # {guias}
+        # A imagem está aprovada? Justifique sua resposta.
+        # """
 
-        try:
-            # Gera a resposta de verificação usando o modelo de linguagem
-            with st.spinner('Verificando alinhamento com os guias do cliente...'):
-                resposta_verificacao = modelo_texto.generate_content(prompt_verificacao)
-                avaliacao = resposta_verificacao.text  # Corrigido o acesso à resposta
-        except Exception as e:
-            st.error(f"Ocorreu um erro ao verificar a imagem: {e}")
-            return
+        # try:
+        #     # Gera a resposta de verificação usando o modelo de linguagem
+        #     with st.spinner('Verificando alinhamento com os guias do cliente...'):
+        #         resposta_verificacao = modelo_texto.generate_content(prompt_verificacao)
+        #         avaliacao = resposta_verificacao.text  # Corrigido o acesso à resposta
+        # except Exception as e:
+        #     st.error(f"Ocorreu um erro ao verificar a imagem: {e}")
+        #     return
 
         # Exibe a avaliação
         #st.subheader('Avaliação da Imagem')
