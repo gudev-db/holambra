@@ -57,7 +57,7 @@ def alinhar_img():
             with st.spinner('Analisando a imagem...'):
                 resposta = modelo_vision.generate_content([
                     {"mime_type": mime_type, "data": img_bytes},
-                    {"text": ""}  # Adiciona um parâmetro de texto vazio
+                    {"text": "O que há nessa imagem?"}  # Adiciona um parâmetro de texto vazio
                 ])
                 descricao = resposta.text  # Extraindo a resposta corretamente
         except Exception as e:
