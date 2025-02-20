@@ -8,9 +8,6 @@ import os
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=gemini_api_key)
 
-# Inicializa o cliente Gemini
-client = genai.Client(api_key=gemini_api_key)
-
 # Guias do cliente
 guias = """
 Sempre fazer:
@@ -47,34 +44,39 @@ def alinhar_img():
         image.save(img_byte_arr, format=image.format)
         img_bytes = img_byte_arr.getvalue()
 
-        # Gera a descrição da imagem usando o modelo "gemini-2.0-flash"
+        # Inicializa o cliente do Gemini de forma correta
         with st.spinner('Analisando a imagem...'):
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=["What is this image?", img_bytes]
-            )
-            descricao = response.text  # Extraindo a resposta corretamente
+            try:
+                # Usando o cliente do Gemini corretamente
+                response = genai.generation_models.generate_content(
+                    model="gemini-2.0-flash",
+                    contents=["What is this image?", img_bytes]
+                )
+                descricao = response.text  # Extraindo a resposta corretamente
 
-        # Exibe a descrição gerada
-        st.subheader('Descrição da Imagem')
-        st.write(descricao)
+                # Exibe a descrição gerada
+                st.subheader('Descrição da Imagem')
+                st.write(descricao)
 
-        # Prompt para verificar alinhamento com os guias do cliente
-        prompt_verificacao = f"""
-        Esta é a descrição da imagem fornecida: {descricao}.
-        De acordo com os seguintes guias do cliente:
-        {guias}
-        A imagem está aprovada? Justifique sua resposta.
-        """
+                # Prompt para verificar alinhamento com os guias do cliente
+                prompt_verificacao = f"""
+                Esta é a descrição da imagem fornecida: {descricao}.
+                De acordo com os seguintes guias do cliente:
+                {guias}
+                A imagem está aprovada? Justifique sua resposta.
+                """
 
-        # Gera a resposta de verificação usando o modelo de linguagem "gemini-1.5-flash"
-        with st.spinner('Verificando alinhamento com os guias do cliente...'):
-            response_verificacao = client.models.generate_content(
-                model="gemini-1.5-flash",
-                contents=[prompt_verificacao]
-            )
-            avaliacao = response_verificacao.text  # Extraindo a resposta corretamente
+                # Gera a resposta de verificação usando o modelo de linguagem "gemini-1.5-flash"
+                response_verificacao = genai.generation_models.generate_content(
+                    model="gemini-1.5-flash",
+                    contents=[prompt_verificacao]
+                )
+                avaliacao = response_verificacao.text  # Extraindo a resposta corretamente
 
-        # Exibe a avaliação
-        st.subheader('Avaliação da Imagem')
-        st.write(avaliacao)
+                # Exibe a avaliação
+                st.subheader('Avaliação da Imagem')
+                st.write(avaliacao)
+
+            except Exception as e:
+                st.error(f"Erro ao analisar a imagem: {e}")
+
