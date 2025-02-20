@@ -35,7 +35,7 @@ Se for uma imagem com textos ou elementos gráficos na tela, adicione esses requ
 
 # Função para analisar a imagem
 def alinhar_img():
-    st.subheader('Análise de Imagem')
+    st.subheader('Aprovação de Criativos')
 
     # Criação de um estado para controlar a imagem carregada
     if 'image' not in st.session_state:
