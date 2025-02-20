@@ -73,7 +73,7 @@ def alinhar_img():
         - Cliente não quer pessoas de bermuda e/ou roupas casuais em geral.
         - Cliente não quer 'personificar' a marca. Então fotos com uma única pessoa não podem ser aprovadas.
         - Imagens devem ser assertivas.
-        - Se contiver um sol, ele não pode ser brilhante demais. Dentro da própria região em que o sol está contido, ele não deve brilhar demais. De uma forma geral, o cliente quer
+        - Se contiver um sol, seu brilho não pode ser muito prominente na imagem. Dentro da própria região em que o sol está contido, ele não deve brilhar demais. De uma forma geral, o cliente quer
         que todos os elementos de uma imagem sejam visíveis e nenhum se sobreponha demais ao outro.
         
         Se for uma imagem com textos ou elementos gráficos na tela, adicione esses requisitos para aprovação além dos anteriores:
