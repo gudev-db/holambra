@@ -53,7 +53,7 @@ def planej_campanhas():
                         
                         
                     - Corrija-o se atentando aos padrões ortográficos e gramaticais da língua portuguesa brasileira de uma forma que mantenha o sentido do texto. Não resuma. Me traga o texto inteiro correto.
-                    - crie comentários abaixo sobre o que foi alterado no texto   """
+                    - em itálico e entre ()'s, crie comentários abaixo sobre o que foi alterado no texto   """
                     corrected_output = modelo_linguagem.generate_content(prompt_texto).text
 
                      
