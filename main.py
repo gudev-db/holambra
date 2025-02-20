@@ -116,19 +116,16 @@ if login():
             "Escolha o tipo de conteúdo Mídias:",
             [
 
-                "Corretor de texto",
                 "Resumidor de texto",
                 "Alinhador Redes Sociais e Materiais Impressos",
                 "Alinhador Jornal Conecta",
                 "Resumidor de entrevista",
-                "Aprovador de Imagens"
+                "Aprovador de Imagens",
 
             ]
         )
 
         if midias_option != "Selecione uma opção":
-            if midias_option == "Corretor de texto":
-                planej_campanhas()
             elif midias_option == "Resumidor de texto":
                 resumidor()
             elif midias_option == "Alinhador Redes Sociais e Materiais Impressos":
