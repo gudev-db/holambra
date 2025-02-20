@@ -16,15 +16,15 @@ modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
 guias = """
 Se for apenas uma imagem, eis os requisitos:
 - Cliente quer uma imagem limpa. Sem sujeira.
-- Cliente não quer pessoas de bermuda.
+- Cliente não quer pessoas de bermuda e/ou roupas casuais em geral.
 - Cliente não quer 'personificar' a marca. Então fotos com uma única pessoa não podem.
 - Imagens devem ser assertivas.
-- O sol não deve ser brilhante demais ao ponto de ocultar outros elementos da imagem.
+- Se contiver um sol, ele não deve ser brilhante demais ao ponto de ocultar outros elementos da imagem.
 
 Se for uma imagem com textos ou elementos gráficos na tela, adicione esses requisitos para aprovação além dos anteriores:
 - Sem 0 à esquerda de números. Exemplo: 3 não pode ser representado por 03. Se aparecer só 3 ou 11 ou etc, está ok.
-- Deixar a fonte mais de rodapé e trabalhar mais o título para chamar mais atenção.
-- Ícone ao lado das culturas para chamar atenção.
+- Deixar a fonte mais de rodapé e Títulos devem ser chamativos.
+- Se culturas forem mencionadas, precisam de um ícone as acompanhando.
 - Em elementos que devem ser um sinal de atenção, colocaria um ícone para ilustrar.
 """
 
@@ -55,7 +55,7 @@ def alinhar_img():
         st.session_state.image = image
 
         # Prompt para analisar a imagem
-        prompt = "Descreva em máximo detalhe tudo que está contido nessa imagem. Desde uma descrição extremamente detalhada da imagem, até os textos, elementos gráficos e cores mais prominentes contidas nela se os existirem."
+        prompt = "Descreva em máximo e profundo e extremo detalhe tudo que está contido nessa imagem (o seu retorno será toda a referência que o próximo prompt terá como referência sobre o que está na imagem, então, não deixe nada passar). Desde uma descrição extremamente detalhada da imagem, até os textos, elementos gráficos e cores mais prominentes contidas nela se os existirem."
 
         # Gera a descrição da imagem usando o Gemini
         try:
