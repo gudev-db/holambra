@@ -14,16 +14,14 @@ modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
 
 # Guias do cliente
 guias = """
-
-- Cliente quer uma imagem limpa. Sem sujeira
-- Cliente não quer pessoas de bermuda
+- Cliente quer uma imagem limpa. Sem sujeira.
+- Cliente não quer pessoas de bermuda.
 - Cliente não quer 'personificar' a marca. Então fotos com uma única pessoa não podem.
-- Imagens devem ser acertivas
-- Sem 0 antes dos números
-- deixar a fonte mais de rodapé e trabalhar mais o título para chamar mais atenção
-- ícone ao lado das culturas para chamar atenção
-- em sinal de atenção, colocaria um ícone para ilustrar
-
+- Imagens devem ser assertivas.
+- Sem 0 antes dos números.
+- Deixar a fonte mais de rodapé e trabalhar mais o título para chamar mais atenção.
+- Ícone ao lado das culturas para chamar atenção.
+- Em sinal de atenção, colocaria um ícone para ilustrar.
 """
 
 # Função para analisar a imagem
@@ -52,13 +50,16 @@ def alinhar_img():
         # Armazena a imagem no estado da sessão
         st.session_state.image = image
 
+        # Prompt para analisar a imagem
+        prompt = "O que há nessa imagem?"
+
         # Gera a descrição da imagem usando o Gemini
         try:
             with st.spinner('Analisando a imagem...'):
-                resposta = modelo_vision.generate_content([
-                    {"mime_type": mime_type, "data": img_bytes},
-                    {"text": "O que há nessa imagem?"}  # Adiciona um parâmetro de texto vazio
-                ])
+                resposta = modelo_vision.generate_content(
+                    model="gemini-2.0-flash",
+                    contents=[prompt, {"mime_type": mime_type, "data": img_bytes}]
+                )
                 descricao = resposta.text  # Extraindo a resposta corretamente
         except Exception as e:
             st.error(f"Ocorreu um erro ao processar a imagem: {e}")
