@@ -1,5 +1,6 @@
 import streamlit as st
 import google.generativeai as genai
+from google.generativeai import types
 from PIL import Image
 import io
 import os
@@ -9,8 +10,8 @@ gemini_api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=gemini_api_key)
 
 # Inicializa os modelos do Gemini
-modelo_vision = genai.GenerativeModel("gemini-1.5-vision")
-modelo_linguagem = genai.GenerativeModel("gemini-1.5-flash")
+modelo_vision = genai.GenerativeModel("gemini-1.5-vision")  # Para imagens
+modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Para texto
 
 # Guias do cliente
 guias = """
@@ -36,8 +37,10 @@ Sempre evitar:
 def alinhar_img():
     st.subheader('Análise de Imagem')
 
+    # Upload da imagem
     uploaded_file = st.file_uploader("Escolha uma imagem", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:
+        # Exibe a imagem carregada
         image = Image.open(uploaded_file)
         st.image(image, caption='Imagem Carregada', use_column_width=True)
 
@@ -46,17 +49,21 @@ def alinhar_img():
         image.save(img_byte_arr, format=image.format)
         img_bytes = img_byte_arr.getvalue()
 
-        # Gera a descrição da imagem usando o Gemini Vision
-        with st.spinner('Analisando a imagem...'):
-            resposta = modelo_vision.generate_content([img_bytes])
-            descricao = resposta.text
+        # Cria um objeto de conteúdo para o Gemini Vision
+        imagem_content = types.Content(parts=[types.Part(inline_data=img_bytes)])
 
+        # Gera a descrição da imagem usando o Gemini
+        with st.spinner('Analisando a imagem...'):
+            resposta = modelo_vision.generate_content([imagem_content])
+            descricao = resposta.text  # Extrai a resposta em texto
+
+        # Exibe a descrição gerada
         st.subheader('Descrição da Imagem')
         st.write(descricao)
 
         # Prompt para verificar alinhamento com os guias do cliente
         prompt_verificacao = f"""
-        Esta é a descrição da imagem fornecida: "{descricao}".
+        Esta é a descrição da imagem fornecida: {descricao}.
         De acordo com os seguintes guias do cliente:
         {guias}
         A imagem está aprovada? Justifique sua resposta.
@@ -64,8 +71,9 @@ def alinhar_img():
 
         # Gera a resposta de verificação usando o modelo de linguagem
         with st.spinner('Verificando alinhamento com os guias do cliente...'):
-            resposta_verificacao = modelo_linguagem.generate_content(prompt_verificacao)
-            avaliacao = resposta_verificacao.text
+            resposta_verificacao = modelo_texto.generate_content(prompt_verificacao)
+            avaliacao = resposta_verificacao.text  # Extrai a resposta em texto
 
+        # Exibe a avaliação
         st.subheader('Avaliação da Imagem')
         st.write(avaliacao)
