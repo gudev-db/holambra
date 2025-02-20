@@ -5,11 +5,11 @@ import io
 import os
 
 # Configuração do Gemini API
-gemini_api_key = os.getenv("GEMINI_API_KEY")  # Certifique-se de que a chave API está definida corretamente
+gemini_api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=gemini_api_key)
 
 # Inicializa os modelos do Gemini
-modelo_vision = genai.GenerativeModel("gemini-2.0-flash")  # Modelo para análise de imagens
+modelo_vision = genai.GenerativeModel("gemini-2.0-flash")  # Modelo para imagens
 modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
 
 # Guias do cliente
@@ -54,16 +54,12 @@ def alinhar_img():
         # Gera a descrição da imagem usando o Gemini
         with st.spinner('Analisando a imagem...'):
             try:
-                resposta = modelo_vision.generate_content(
-                    inputs=[{
-                        "mime_type": mime_type,
-                        "data": img_bytes,
-                        "text": "Descreva esta imagem com base nas informações fornecidas"
-                    }]
-                )
-                descricao = resposta['text']  # Extraindo a resposta corretamente
+                resposta = modelo_vision.generate_content([
+                    {"mime_type": mime_type, "data": img_bytes}
+                ])
+                descricao = resposta['text']  # Garantindo que a resposta seja extraída corretamente
             except Exception as e:
-                st.error(f"Erro ao processar a imagem: {str(e)}")
+                st.error(f"Ocorreu um erro ao processar a imagem: {e}")
                 return
 
         # Exibe a descrição gerada
@@ -82,9 +78,9 @@ def alinhar_img():
         with st.spinner('Verificando alinhamento com os guias do cliente...'):
             try:
                 resposta_verificacao = modelo_texto.generate_content(prompt_verificacao)
-                avaliacao = resposta_verificacao['text']  # Extraindo a resposta corretamente
+                avaliacao = resposta_verificacao['text']  # Garantindo que a resposta seja extraída corretamente
             except Exception as e:
-                st.error(f"Erro ao verificar o alinhamento: {str(e)}")
+                st.error(f"Ocorreu um erro ao verificar a imagem: {e}")
                 return
 
         # Exibe a avaliação
