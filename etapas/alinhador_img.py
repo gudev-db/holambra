@@ -54,9 +54,13 @@ def alinhar_img():
         # Gera a descrição da imagem usando o Gemini
         with st.spinner('Analisando a imagem...'):
             try:
-                resposta = modelo_vision.generate_content([
-                    {"mime_type": mime_type, "data": img_bytes}
-                ])
+                resposta = modelo_vision.generate_content(
+                    inputs=[{
+                        "mime_type": mime_type,
+                        "data": img_bytes,
+                        "text": "Descreva esta imagem com base nas informações fornecidas"
+                    }]
+                )
                 descricao = resposta['text']  # Extraindo a resposta corretamente
             except Exception as e:
                 st.error(f"Erro ao processar a imagem: {str(e)}")
