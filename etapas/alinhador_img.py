@@ -9,7 +9,12 @@ gemini_api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=gemini_api_key)
 
 # Inicializa os modelos do Gemini
-modelo_vision = genai.GenerativeModel("gemini-2.0-flash")  # Modelo para imagens
+modelo_vision = genai.GenerativeModel(
+    "gemini-2.0-flash",
+    generation_config={
+        "temperature": 0.1  # Ajuste a temperatura aqui
+    }
+)  # Modelo para imagens
 modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
 
 # Guias do cliente
@@ -59,17 +64,18 @@ def alinhar_img():
         prompt = '''
 
         Levando em conta os requisitos de aprovação:
+        
         Se for apenas uma imagem, eis os requisitos:
         - Cliente quer uma imagem limpa. Sem sujeira.
         - Cliente não quer pessoas de bermuda e/ou roupas casuais em geral.
-        - Cliente não quer 'personificar' a marca. Então fotos com uma única pessoa não podem.
+        - Cliente não quer 'personificar' a marca. Então fotos com uma única pessoa não podem ser aprovadas.
         - Imagens devem ser assertivas.
-        - Se contiver um sol, ele não deve ser brilhante demais. Dentro da própria região em que o sol está contido, ele não deve brilhar demais.
+        - Se contiver um sol, ele não pode ser brilhante demais. Dentro da própria região em que o sol está contido, ele não deve brilhar demais.
         
         Se for uma imagem com textos ou elementos gráficos na tela, adicione esses requisitos para aprovação além dos anteriores:
         - '0' à esquerda de números é critério de reprovação. Exemplo: '3' está ok, mas '03' não.
-        - A fonte utilizada e títulos devem ser chamativos no contexto da imagem, devem também ser 'mais de rodapé'.
-        - Se culturas de plantio forem mencionadas, precisam de um ícone as acompanhando.
+        - A fonte utilizada e títulos devem ser chamativos no contexto da imagem. Diga qual fonte está sendo utilizada, cor e tamanho e proponha uma mais chamativa se não for aprovada.
+        - Se culturas de plantio forem mencionadas, precisam de um ícone as acompanhando. Caso contrário, reprovada.
         - Em elementos que devem ser um sinal de atenção, precisa um ícone para ilustrar.
 
         Aprove ou não a imagem, com detalhes do porquê.
