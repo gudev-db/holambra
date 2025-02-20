@@ -19,6 +19,7 @@ Se for apenas uma imagem, eis os requisitos:
 - Cliente não quer pessoas de bermuda.
 - Cliente não quer 'personificar' a marca. Então fotos com uma única pessoa não podem.
 - Imagens devem ser assertivas.
+- O sol não deve ficar muito 'estourado'. Não deve ocultar o resto dos outros elementos da imagem.
 
 Se for uma imagem com textos ou elementos gráficos na tela, adicione esses requisitos para aprovação além dos anteriores:
 - Sem 0 antes dos números.
