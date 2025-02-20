@@ -74,20 +74,6 @@ def login():
 # Função para exibir subseções com explicações
 def exibir_subsecoes(selecao_sidebar):
 
-    if selecao_sidebar == "Holambra":
-        st.header("Holambra")
-        st.text("Utilidades de correção/redação customizadas para as necessidades da Cooperativa Holambra.")
-        st.subheader("1. Corretor")
-        st.text("Corrija o seu texto de acordo com as normas gramática/ortográficas padrão brasileiras mantendo o sentido principal.")
-        st.subheader("2. Resumidor")
-        st.text("Resuma o seu texto mantendo o sentido principal.")
-        st.subheader("3. Alinhador")
-        st.text("Alinhe o seu texto de acordo com o tom de voz da Cooperativa Holambra.")
-
-    elif selecao_sidebar == "Documentos Salvos":
-        st.header("Documentos Salvos")
-        st.text("Aqui você pode visualizar, editar e organizar todos os documentos gerados ao longo do processo. "
-                "Essa área é essencial para manter o controle de todas as estratégias e materiais criados, facilitando o acesso e a edição desses conteúdos quando necessário.")
 
 # Verifique se o login foi feito antes de exibir o conteúdo
 if login():
