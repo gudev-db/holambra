@@ -48,9 +48,14 @@ def alinhar_img():
         image.save(img_byte_arr, format=image.format)
         img_bytes = img_byte_arr.getvalue()
 
+        # Define o tipo MIME correto
+        mime_type = "image/png" if image.format == "PNG" else "image/jpeg"
+
         # Gera a descrição da imagem usando o Gemini
         with st.spinner('Analisando a imagem...'):
-            resposta = modelo_vision.generate_content([img_bytes])
+            resposta = modelo_vision.generate_content([
+                {"mime_type": mime_type, "data": img_bytes}
+            ])
             descricao = resposta.text  # Extraindo a resposta corretamente
 
         # Exibe a descrição gerada
