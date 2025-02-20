@@ -8,9 +8,8 @@ import os
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=gemini_api_key)
 
-# Inicializa os modelos do Gemini
-modelo_vision = genai.GenerativeModel("gemini-2.0-flash")  # Modelo para imagens
-modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
+# Inicializa o cliente Gemini
+client = genai.Client(api_key=gemini_api_key)
 
 # Guias do cliente
 guias = """
@@ -48,15 +47,13 @@ def alinhar_img():
         image.save(img_byte_arr, format=image.format)
         img_bytes = img_byte_arr.getvalue()
 
-        # Define o tipo MIME correto
-        mime_type = "image/png" if image.format == "PNG" else "image/jpeg"
-
-        # Gera a descrição da imagem usando o Gemini
+        # Gera a descrição da imagem usando o modelo "gemini-2.0-flash"
         with st.spinner('Analisando a imagem...'):
-            resposta = modelo_vision.generate_content([
-                {"mime_type": mime_type, "data": img_bytes}
-            ])
-            descricao = resposta.text  # Extraindo a resposta corretamente
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=["What is this image?", img_bytes]
+            )
+            descricao = response.text  # Extraindo a resposta corretamente
 
         # Exibe a descrição gerada
         st.subheader('Descrição da Imagem')
@@ -70,10 +67,13 @@ def alinhar_img():
         A imagem está aprovada? Justifique sua resposta.
         """
 
-        # Gera a resposta de verificação usando o modelo de linguagem
+        # Gera a resposta de verificação usando o modelo de linguagem "gemini-1.5-flash"
         with st.spinner('Verificando alinhamento com os guias do cliente...'):
-            resposta_verificacao = modelo_texto.generate_content(prompt_verificacao)
-            avaliacao = resposta_verificacao.text  # Extraindo a resposta corretamente
+            response_verificacao = client.models.generate_content(
+                model="gemini-1.5-flash",
+                contents=[prompt_verificacao]
+            )
+            avaliacao = response_verificacao.text  # Extraindo a resposta corretamente
 
         # Exibe a avaliação
         st.subheader('Avaliação da Imagem')
