@@ -1,6 +1,5 @@
 import streamlit as st
 import google.generativeai as genai
-from google.generativeai import types
 from PIL import Image
 import io
 import os
@@ -10,8 +9,8 @@ gemini_api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=gemini_api_key)
 
 # Inicializa os modelos do Gemini
-modelo_vision = genai.GenerativeModel("gemini-1.5-vision")  # Para imagens
-modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Para texto
+modelo_vision = genai.GenerativeModel("gemini-1.5-vision")  # Modelo para imagens
+modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
 
 # Guias do cliente
 guias = """
@@ -49,13 +48,10 @@ def alinhar_img():
         image.save(img_byte_arr, format=image.format)
         img_bytes = img_byte_arr.getvalue()
 
-        # Cria um objeto de conteúdo para o Gemini Vision
-        imagem_content = types.Content(parts=[types.Part(inline_data=img_bytes)])
-
         # Gera a descrição da imagem usando o Gemini
         with st.spinner('Analisando a imagem...'):
-            resposta = modelo_vision.generate_content([imagem_content])
-            descricao = resposta.text  # Extrai a resposta em texto
+            resposta = modelo_vision.generate_content([img_bytes])
+            descricao = resposta.text  # Extraindo a resposta corretamente
 
         # Exibe a descrição gerada
         st.subheader('Descrição da Imagem')
@@ -72,7 +68,7 @@ def alinhar_img():
         # Gera a resposta de verificação usando o modelo de linguagem
         with st.spinner('Verificando alinhamento com os guias do cliente...'):
             resposta_verificacao = modelo_texto.generate_content(prompt_verificacao)
-            avaliacao = resposta_verificacao.text  # Extrai a resposta em texto
+            avaliacao = resposta_verificacao.text  # Extraindo a resposta corretamente
 
         # Exibe a avaliação
         st.subheader('Avaliação da Imagem')
