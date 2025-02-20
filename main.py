@@ -126,7 +126,7 @@ if login():
         )
 
         if midias_option != "Selecione uma opção":
-            elif midias_option == "Resumidor de texto":
+            if midias_option == "Resumidor de texto":
                 resumidor()
             elif midias_option == "Alinhador Redes Sociais e Materiais Impressos":
                 alinhar()
