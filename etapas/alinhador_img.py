@@ -57,7 +57,7 @@ def alinhar_img():
         try:
             with st.spinner('Analisando a imagem...'):
                 resposta = modelo_vision.generate_content(
-                    model="gemini-2.0-flash",
+                    
                     contents=[prompt, {"mime_type": mime_type, "data": img_bytes}]
                 )
                 descricao = resposta.text  # Extraindo a resposta corretamente
