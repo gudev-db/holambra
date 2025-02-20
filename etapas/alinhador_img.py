@@ -64,13 +64,13 @@ def alinhar_img():
         - Cliente não quer pessoas de bermuda e/ou roupas casuais em geral.
         - Cliente não quer 'personificar' a marca. Então fotos com uma única pessoa não podem.
         - Imagens devem ser assertivas.
-        - Se contiver um sol, ele não deve ser brilhante demais.
+        - Se contiver um sol, ele não deve ser brilhante demais. Dentro da própria região em que o sol está contido, ele não deve brilhar demais.
         
         Se for uma imagem com textos ou elementos gráficos na tela, adicione esses requisitos para aprovação além dos anteriores:
         - Sem 0 à esquerda de números. Exemplo: 3 não pode ser representado por 03. Se aparecer só 3 ou 11 ou etc, está ok.
-        - Deixar a fonte mais de rodapé e Títulos devem ser chamativos.
-        - Se culturas forem mencionadas, precisam de um ícone as acompanhando.
-        - Em elementos que devem ser um sinal de atenção, colocaria um ícone para ilustrar.
+        - A fonte utilizada e títulos devem ser chamativos no contexto da imagem, devem também ser 'mais de rodapé'.
+        - Se culturas de plantio forem mencionadas, precisam de um ícone as acompanhando.
+        - Em elementos que devem ser um sinal de atenção, precisa um ícone para ilustrar.
 
         Aprove ou não a imagem, com detalhes do porquê.
         '''
@@ -108,8 +108,8 @@ def alinhar_img():
             return
 
         # Exibe a avaliação
-        st.subheader('Avaliação da Imagem')
-        st.write(avaliacao)
+        #st.subheader('Avaliação da Imagem')
+        #st.write(avaliacao)
 
     # Botão para remover a imagem
     if st.button("Remover Imagem"):
