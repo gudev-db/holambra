@@ -24,7 +24,7 @@ Se for uma imagem com textos ou elementos gráficos na tela, adicione esses requ
 - Sem 0 antes dos números.
 - Deixar a fonte mais de rodapé e trabalhar mais o título para chamar mais atenção.
 - Ícone ao lado das culturas para chamar atenção.
-- Em sinal de atenção, colocaria um ícone para ilustrar.
+- Em elementos que devem ser um sinal de atenção, colocaria um ícone para ilustrar.
 """
 
 # Função para analisar a imagem
