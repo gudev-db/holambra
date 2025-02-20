@@ -5,8 +5,12 @@ import io
 import os
 
 # Configuração do Gemini API
-gemini_api_key = os.getenv("GEMINI_API_KEY")
+gemini_api_key = os.getenv("GEMINI_API_KEY")  # Certifique-se de que a chave API está definida corretamente
 genai.configure(api_key=gemini_api_key)
+
+# Inicializa os modelos do Gemini
+modelo_vision = genai.GenerativeModel("gemini-2.0-flash")  # Modelo para análise de imagens
+modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
 
 # Guias do cliente
 guias = """
@@ -44,39 +48,41 @@ def alinhar_img():
         image.save(img_byte_arr, format=image.format)
         img_bytes = img_byte_arr.getvalue()
 
-        # Inicializa o cliente do Gemini de forma correta
+        # Define o tipo MIME correto
+        mime_type = "image/png" if image.format == "PNG" else "image/jpeg"
+
+        # Gera a descrição da imagem usando o Gemini
         with st.spinner('Analisando a imagem...'):
             try:
-                # Usando o cliente do Gemini corretamente
-                response = genai.generation_models.generate_content(
-                    model="gemini-2.0-flash",
-                    contents=["What is this image?", img_bytes]
-                )
-                descricao = response.text  # Extraindo a resposta corretamente
-
-                # Exibe a descrição gerada
-                st.subheader('Descrição da Imagem')
-                st.write(descricao)
-
-                # Prompt para verificar alinhamento com os guias do cliente
-                prompt_verificacao = f"""
-                Esta é a descrição da imagem fornecida: {descricao}.
-                De acordo com os seguintes guias do cliente:
-                {guias}
-                A imagem está aprovada? Justifique sua resposta.
-                """
-
-                # Gera a resposta de verificação usando o modelo de linguagem "gemini-1.5-flash"
-                response_verificacao = genai.generation_models.generate_content(
-                    model="gemini-1.5-flash",
-                    contents=[prompt_verificacao]
-                )
-                avaliacao = response_verificacao.text  # Extraindo a resposta corretamente
-
-                # Exibe a avaliação
-                st.subheader('Avaliação da Imagem')
-                st.write(avaliacao)
-
+                resposta = modelo_vision.generate_content([
+                    {"mime_type": mime_type, "data": img_bytes}
+                ])
+                descricao = resposta['text']  # Extraindo a resposta corretamente
             except Exception as e:
-                st.error(f"Erro ao analisar a imagem: {e}")
+                st.error(f"Erro ao processar a imagem: {str(e)}")
+                return
 
+        # Exibe a descrição gerada
+        st.subheader('Descrição da Imagem')
+        st.write(descricao)
+
+        # Prompt para verificar alinhamento com os guias do cliente
+        prompt_verificacao = f"""
+        Esta é a descrição da imagem fornecida: {descricao}.
+        De acordo com os seguintes guias do cliente:
+        {guias}
+        A imagem está aprovada? Justifique sua resposta.
+        """
+
+        # Gera a resposta de verificação usando o modelo de linguagem
+        with st.spinner('Verificando alinhamento com os guias do cliente...'):
+            try:
+                resposta_verificacao = modelo_texto.generate_content(prompt_verificacao)
+                avaliacao = resposta_verificacao['text']  # Extraindo a resposta corretamente
+            except Exception as e:
+                st.error(f"Erro ao verificar o alinhamento: {str(e)}")
+                return
+
+        # Exibe a avaliação
+        st.subheader('Avaliação da Imagem')
+        st.write(avaliacao)
