@@ -113,6 +113,7 @@ if login():
                 "Alinhador Jornal Conecta",
                 "Resumidor de entrevista",
                 "Aprovador de Imagens",
+                "Corretor de texto"
 
             ]
         )
@@ -120,7 +121,11 @@ if login():
         if midias_option != "Selecione uma opção":
             if midias_option == "Resumidor de texto":
                 resumidor()
+            if midias_option == "Corretor de texto":
+                planej_campanhas()
             elif midias_option == "Alinhador Redes Sociais e Materiais Impressos":
+                alinhar()
+            elif midias_option == "Corretor de texto":
                 alinhar()
             elif midias_option == "Alinhador Jornal Conecta":
                 alinhar_jornal()
