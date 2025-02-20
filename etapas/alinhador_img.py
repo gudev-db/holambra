@@ -63,6 +63,8 @@ def alinhar_img():
         #prompt = "Descreva em máximo e profundo e extremo detalhe tudo que está contido nessa imagem (o seu retorno será toda a referência que o próximo prompt terá como referência sobre o que está na imagem, então, não deixe nada passar). Desde uma descrição extremamente detalhada da imagem, até os textos, elementos gráficos e cores mais prominentes contidas nela se os existirem. Diga se o sol (se presente) brilha demais ao ponto de ofuscar demais a imagem."
         prompt = '''
 
+        Se atente ao mínimo e extremo detalhe de tudo que está na imagem, você é uma pessoa extrema e profundamente detalhista.
+        
         Levando em conta os requisitos de aprovação:
         
         Se for apenas uma imagem, eis os requisitos:
