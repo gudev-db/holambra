@@ -22,7 +22,7 @@ Se for apenas uma imagem, eis os requisitos:
 - O sol não deve ficar muito 'estourado'. Não deve ocultar o resto dos outros elementos da imagem.
 
 Se for uma imagem com textos ou elementos gráficos na tela, adicione esses requisitos para aprovação além dos anteriores:
-- Sem 0 antes dos números.
+- Sem 0 à esquerda de números. Exemplo: 3 não pode ser representado por 03. Se aparecer só 3 ou 11 ou etc, está ok.
 - Deixar a fonte mais de rodapé e trabalhar mais o título para chamar mais atenção.
 - Ícone ao lado das culturas para chamar atenção.
 - Em elementos que devem ser um sinal de atenção, colocaria um ícone para ilustrar.
