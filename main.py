@@ -11,6 +11,7 @@ from etapas.resumidor import resumidor
 from etapas.alinhador_jornal import alinhar_jornal
 from etapas.alinhador_rede import alinhar
 from etapas.resum_entrevista import resumidor_entrevista
+from etapas.alinhador_img import alinhar_img
 
 
 st.set_page_config(
@@ -119,7 +120,8 @@ if login():
                 "Resumidor de texto",
                 "Alinhador Redes Sociais e Materiais Impressos",
                 "Alinhador Jornal Conecta",
-                "Resumidor de entrevista"
+                "Resumidor de entrevista",
+                "Aprovador de Imagens"
 
             ]
         )
@@ -135,6 +137,8 @@ if login():
                 alinhar_jornal()
             elif midias_option == "Resumidor de entrevista":
                 resumidor_entrevista()
+            elif midias_option == "Aprovador de Imagens":
+                alinhar_img()
 
 
  
