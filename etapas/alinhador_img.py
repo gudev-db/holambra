@@ -9,7 +9,7 @@ gemini_api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=gemini_api_key)
 
 # Inicializa os modelos do Gemini
-modelo_vision = genai.GenerativeModel("gemini-1.5-vision")  # Modelo para imagens
+modelo_vision = genai.GenerativeModel("gemini-2.0-vision")  # Modelo para imagens
 modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
 
 # Guias do cliente
