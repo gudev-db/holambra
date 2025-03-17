@@ -1,21 +1,17 @@
+
+
+
+
+
+
 import streamlit as st
-import google.generativeai as genai
-from PIL import Image
+from pptx import Presentation
 import io
+import pdfplumber
+import google.generativeai as genai
 import os
+from PIL import Image
 
-# Configuração do Gemini API
-gemini_api_key = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=gemini_api_key)
-
-# Inicializa os modelos do Gemini
-modelo_vision = genai.GenerativeModel(
-    "gemini-2.0-flash",
-    generation_config={
-        "temperature": 0.1  # Ajuste a temperatura aqui
-    }
-)  # Modelo para imagens
-modelo_texto = genai.GenerativeModel("gemini-1.5-flash")  # Modelo para texto
 
 # Guias do cliente
 guias = """
@@ -121,87 +117,87 @@ comments_2025-02-27T11:12:29.725Z.txt
 Displaying comments_2025-02-27T11:12:29.725Z.txt.
 """
 
-# Função para analisar a imagem
-def alinhar_img():
-    st.subheader('Aprovação de Criativos')
+# Configuração do Gemini API
+gemini_api_key = os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=gemini_api_key)
 
-    # Criação de um estado para controlar a imagem carregada
-    if 'image' not in st.session_state:
-        st.session_state.image = None
+# Inicializa os modelos do Gemini
+modelo_vision = genai.GenerativeModel("gemini-2.0-flash", generation_config={"temperature": 0.1})
+modelo_texto = genai.GenerativeModel("gemini-1.5-flash")
 
-    # Upload da imagem
-    uploaded_file = st.file_uploader("Escolha uma imagem", type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:
-        # Exibe a imagem carregada
+def extract_text_from_pptx(file):
+    prs = Presentation(file)
+    slides_text = []
+    for slide in prs.slides:
+        slide_text = ""
+        for shape in slide.shapes:
+            if hasattr(shape, "text"):  # Verifica se o shape tem texto
+                slide_text += shape.text + "\n"
+        slides_text.append(slide_text.strip())
+    return slides_text
+
+def extract_text_from_pdf(file):
+    pages_text = []
+    with pdfplumber.open(file) as pdf:
+        for page in pdf.pages:
+            text = page.extract_text() or "(Página sem texto extraível)"
+            pages_text.append(text)
+    return pages_text
+
+st.set_page_config(layout="wide")
+st.title("Upload e Extração de Texto de PPTX e PDF")
+
+uploaded_file = st.file_uploader("Envie um arquivo .pptx, .pdf ou imagem", type=["pptx", "pdf", "jpg", "jpeg", "png"])
+
+if uploaded_file is not None:
+    file_type = uploaded_file.name.split(".")[-1]
+    branding_material = ""
+    
+    if file_type == "pptx":
+        texts = extract_text_from_pptx(io.BytesIO(uploaded_file.read()))
+        branding_material = "\n\n".join(texts)
+    elif file_type == "pdf":
+        texts = extract_text_from_pdf(io.BytesIO(uploaded_file.read()))
+        branding_material = "\n\n".join(texts)
+    
+    if file_type in ["pptx", "pdf"]:
+        for i, text in enumerate(texts):
+            st.subheader(f"Página {i+1}")
+            st.text_area(f"Texto da Página {i+1}", text, height=200)
+        
+        # Salvar em variável global
+        st.session_state["extracted_texts"] = texts
+        st.success("Texto extraído com sucesso!")
+    
+    if file_type in ["jpg", "jpeg", "png"]:
+        st.image(uploaded_file, caption='Imagem Carregada', use_column_width=True)
         image = Image.open(uploaded_file)
-        st.image(image, caption='Imagem Carregada', use_column_width=True)
-
-        # Converte a imagem para bytes
         img_byte_arr = io.BytesIO()
         image.save(img_byte_arr, format=image.format)
         img_bytes = img_byte_arr.getvalue()
-
-        # Define o tipo MIME correto
         mime_type = "image/png" if image.format == "PNG" else "image/jpeg"
-
-        # Armazena a imagem no estado da sessão
-        st.session_state.image = image
-
-        # Prompt para analisar a imagem
-        #prompt = "Descreva em máximo e profundo e extremo detalhe tudo que está contido nessa imagem (o seu retorno será toda a referência que o próximo prompt terá como referência sobre o que está na imagem, então, não deixe nada passar). Desde uma descrição extremamente detalhada da imagem, até os textos, elementos gráficos e cores mais prominentes contidas nela se os existirem. Diga se o sol (se presente) brilha demais ao ponto de ofuscar demais a imagem."
-        prompt = f'''
-
-        Você está aqui para aprovar imagens de criativos para campanhas de marketing digital para a cooperativa holambra. 
-        Se atente ao mínimo e extremo detalhe de tudo que está na imagem, você é uma pessoa extrema e profundamente detalhista.
         
-        O cliente Holambra já deu alguns feedbacks sobre criativos no passado, como detalhados em {guias}.
+        prompt = f"""
+        Você está aqui para aprovar imagens de criativos para campanhas de marketing digital para a cooperativa Holambra.
+        Se atente ao mínimo e extremo detalhe de tudo que está na imagem, pois você é extremamente detalhista.
         
+        O cliente Holambra já deu alguns feedbacks sobre criativos no passado.
         
-
-        Com base nos requisitos de aprovação, diga se a imagem está aprovada ou não.
-        '''
-        # Gera a descrição da imagem usando o Gemini
+        Considerando os materiais de branding do cliente e as diretrizes já existentes ({branding_material}) e em {guias},
+        diga se a imagem seria aprovada ou não e o que precisa melhorar para ser aprovada.
+        """
+        
         try:
             with st.spinner('Analisando a imagem...'):
                 resposta = modelo_vision.generate_content(
-                    
                     contents=[prompt, {"mime_type": mime_type, "data": img_bytes}]
                 )
-                descricao = resposta.text  # Extraindo a resposta corretamente
+                descricao = resposta.text
+                st.subheader('Aprovação da Imagem')
+                st.write(descricao)
         except Exception as e:
             st.error(f"Ocorreu um erro ao processar a imagem: {e}")
-            return
-
-        # Exibe a descrição gerada
-        st.subheader('Aprovação da Imagem')
-        st.write(descricao)
-
-        # # Prompt para verificar alinhamento com os guias do cliente
-        # prompt_verificacao = f"""
-        # Esta é a descrição da imagem fornecida: {descricao}.
-        # De acordo com os seguintes guias do cliente:
-        # {guias}
-        # A imagem está aprovada? Justifique sua resposta.
-        # """
-
-        # try:
-        #     # Gera a resposta de verificação usando o modelo de linguagem
-        #     with st.spinner('Verificando alinhamento com os guias do cliente...'):
-        #         resposta_verificacao = modelo_texto.generate_content(prompt_verificacao)
-        #         avaliacao = resposta_verificacao.text  # Corrigido o acesso à resposta
-        # except Exception as e:
-        #     st.error(f"Ocorreu um erro ao verificar a imagem: {e}")
-        #     return
-
-        # Exibe a avaliação
-        #st.subheader('Avaliação da Imagem')
-        #st.write(avaliacao)
-
-    # Botão para remover a imagem
-    if st.button("Remover Imagem"):
-        st.session_state.image = None
-        st.experimental_rerun()  # Atualiza a aplicação
-
-    # Se uma imagem foi armazenada no estado da sessão, exibe a opção de remover
-    if st.session_state.image is not None:
-        st.info("Imagem carregada. Clique no botão acima para removê-la.")
+        
+    if st.button("Remover Arquivo"):
+        st.session_state.clear()
+        st.experimental_rerun()
