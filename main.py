@@ -32,8 +32,6 @@ gemini_api_key = os.getenv("GEM_API_KEY")
 api_key = os.getenv("OPENAI_API_KEY")
 rapid_key = os.getenv("RAPID_API")
 
-# Inicializa o cliente Tavily
-client = TavilyClient(api_key=t_api_key1)
 
 # Inicializa o modelo LLM com OpenAI
 modelo_linguagem = ChatOpenAI(
