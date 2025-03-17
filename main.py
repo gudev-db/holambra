@@ -5,7 +5,6 @@ import os
 import google.generativeai as genai
 import streamlit as st
 from langchain_openai import ChatOpenAI
-from tavily import TavilyClient
 from etapas.corretor import planej_campanhas
 from etapas.resumidor import resumidor
 from etapas.alinhador_jornal import alinhar_jornal
@@ -31,7 +30,6 @@ st.text(
 # Configuração das chaves de API
 gemini_api_key = os.getenv("GEM_API_KEY")
 api_key = os.getenv("OPENAI_API_KEY")
-t_api_key1 = os.getenv("T_API_KEY")
 rapid_key = os.getenv("RAPID_API")
 
 # Inicializa o cliente Tavily
